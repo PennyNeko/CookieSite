@@ -47,7 +47,6 @@ public class Login extends HttpServlet {
 			userCookie = server.login(username, password);
 			HttpSession session = request.getSession();
 			session.setAttribute("cookie", userCookie);
-			System.out.println(userCookie+ " login");
 			response.sendRedirect("index.html");
 		} else{
 			server.loginNoCookie(username, password);

@@ -43,7 +43,7 @@ public class CookieHacking extends HttpServlet {
 				String userCookie;
 				HttpSession session = request.getSession();
 				userCookie = (String) session.getAttribute("cookie");
-				System.out.println(userCookie+ " hackcookie");
+				
 				// Let's hack it to say we are an admin
 				// we know the format of the cookie and we know the data of the user we logged in as
 				String pennyPlainTextFirstBlock = "username=penny&f";

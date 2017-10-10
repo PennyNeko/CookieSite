@@ -35,7 +35,7 @@ import static util.Utils.extractMessage;
  */
 public class Server {
 
-	private SecretKey aesKey = createKey();
+	private static SecretKey aesKey = createKey();
 	private Map<String,User> userToPassword = createUsernameToUser();
 
 	/**
@@ -85,14 +85,12 @@ public class Server {
 		cipher.init(Cipher.DECRYPT_MODE, aesKey, new IvParameterSpec(iv));
 		String decryptedCookie = new String(cipher.doFinal(encryptedMessageBytes));
 
-		System.out.println("plainText: "+ decryptedCookie);
-
 		int startIndex = decryptedCookie.indexOf("username=") + 9;
 		int endIndex = decryptedCookie.indexOf("&", startIndex);
 		return decryptedCookie.substring(startIndex, endIndex);
 	}
 
-	private SecretKey createKey() {
+	private static SecretKey createKey() {
 		try {
 			KeyGenerator keyGen = KeyGenerator.getInstance("AES");
 			keyGen.init(128);
