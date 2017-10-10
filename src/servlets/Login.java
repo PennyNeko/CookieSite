@@ -7,7 +7,6 @@ import java.security.GeneralSecurityException;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-
 import main.Server;
 
 /**
@@ -22,6 +21,7 @@ public class Login extends HttpServlet {
 	     */
 	    public Login() {
         // TODO Auto-generated constructor stub
+	    	
     }
 
 	/**
@@ -36,7 +36,6 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		Server server = new Server();
 		String username=request.getParameter("username"); 
 		String password=request.getParameter("password");
@@ -44,15 +43,16 @@ public class Login extends HttpServlet {
 		try {
 		if (preference != null){
 			
-			Cookie userCookie = new Cookie(username, password);
-			response.addCookie(userCookie);
-			server.login(username, password);
-
+			String userCookie;
+			userCookie = server.login(username, password);
+			HttpSession session = request.getSession();
+			session.setAttribute("cookie", userCookie);
+			System.out.println(userCookie+ " login");
 			response.sendRedirect("index.html");
-			} else{
-				server.loginNoCookie(username, password);
+		} else{
+			server.loginNoCookie(username, password);
 
-				response.sendRedirect("indexNoCookie.html");
+			response.sendRedirect("indexNoCookie.html");
 			}
 		}
 		catch (GeneralSecurityException e) {
