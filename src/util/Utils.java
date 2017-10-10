@@ -53,5 +53,5 @@ public class Utils {
 		return Base64.encodeBase64String(result);
 	}
 
-	private Utils() {}
+	public Utils() {}
 }

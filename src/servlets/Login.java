@@ -13,14 +13,14 @@ import main.Server;
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/Login")
+	@WebServlet("/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * Default constructor. 
-     */
-    public Login() {
+	     */
+	    public Login() {
         // TODO Auto-generated constructor stub
     }
 
@@ -36,35 +36,29 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		
 		Server server = new Server();
-		doGet(request, response);
 		String username=request.getParameter("username"); 
 		String password=request.getParameter("password");
 		String preference=request.getParameter("preference");
-		
+		try {
 		if (preference != null){
+			
 			Cookie userCookie = new Cookie(username, password);
+			response.addCookie(userCookie);
+			server.login(username, password);
+
+			response.sendRedirect("index.html");
+			} else{
+				server.loginNoCookie(username, password);
+
+				response.sendRedirect("indexNoCookie.html");
+			}
+		}
+		catch (GeneralSecurityException e) {
+			e.printStackTrace();
 		}
 		
-		response.sendRedirect("index.html");
-		
-		/*try {
-			String userCookie = server.login(username, password);
-			if(userCookie !=null){
-				Cookie myCookie =
-						  new Cookie("authcookie", userCookie);
-						  response.addCookie(myCookie);
-							response.sendRedirect("Admin");
-
-			}else{
-				response.sendRedirect("login.jsp");
-			}
-		} catch (GeneralSecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 	}
 
 }

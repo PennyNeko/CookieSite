@@ -61,6 +61,14 @@ public class Server {
 		byte[] iv = cipher.getIV();
 		return createEncryptedCookie(iv, encrypted);
 	}
+	
+	public String loginNoCookie(String username, String password) throws GeneralSecurityException {
+		User user = userToPassword.get(username);
+		if(user != null && !password.equals(user.getPassword())) {
+			throw new RuntimeException("Invalid username/password");
+		}
+		return null;
+	}
 
 	/**
 	 * Given the encryptedCookie will extract out the username from the cookie and return it.
